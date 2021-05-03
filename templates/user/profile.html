@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  	<div class="container  pt-5">
+  		<h2>Hello {{user.username}}</h2>
+  		<small class="text-muted">Date Joined : {{user.date_joined|date:"jS M, Y"}}</small>
+		<div class="text-right">
+			<h5><a href="{% url 'profile-update' user.pk %}"><i class="fas fa-user-edit mr-1"></i>Update Profile</a></h5>
+		</div>
+		<h3 class="mt-5 pt-3">Your Posts</h3>
+		<small class="text-muted">This page will show your all approved and unapproved posts</small>
+  	</div>
+
+	{% include 'posts.html' %}
+
+{% endblock content%}

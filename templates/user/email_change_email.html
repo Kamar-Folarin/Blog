@@ -1,0 +1,5 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Please click on the link to confirm your email address
+http://{{ domain}}{% url 'change-email' email uid token %}
+{% endautoescape %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block javascript %}
+	<script>
+		function validate(input_id,url){
+			$(input_id).bind("change",function(){
+				input = $(this);
+				var values = {};
+				values[input.attr('name')] = input.val();
+				$.ajax({
+					url:url,
+					data:values,
+					dataType:'json',
+					success:function(data){
+						if(data.is_invalid){
+							input.addClass("is-invalid");
+							input.siblings(".invalid-feedback").text(data.error_message);
+						}
+						else{
+							input.removeClass("is-invalid");
+							input.siblings(".invalid-feedback").text('');
+						}
+					}
+				});
+			});
+		}
+		$(function(){
+			url = "{% url 'register-validate' %}";
+			validate($("#id_username"),url);
+			validate($("#id_email"),url);
+		});
+	</script>
+{% endblock javascript %}
+{% block content %}
+	<div class="container-fluid form-background">
+		<div class="main-form my-5" >
+			<form method="post">
+				<h1 class="header">Sign Up</h1>
+				{% csrf_token %}
+				{% for field in form %}
+					<div class="form-group">
+						<label for="{{field.id_for_label}}">{{field.label}}</label>
+						{% if field.errors %}
+							{{field|add_class:"form-control is-invalid"}}
+						{% else %}
+							{{field|add_class:"form-control"}}
+						{% endif %}
+						<div class="invalid-feedback">
+							{% for error in field.errors %}
+								{{error}}
+							{% endfor %}
+						</div>
+							<small id="passwordHelpBlock" class="form-text text-muted">
+						  {{field.help_text}}
+						</small>
+					</div>
+				{% endfor %}
+				<button type="submit" class="form-button"><span>Sign Up</span></button>
+			</form>
+			<span class="text-muted">Already Have an Account?<a class="ml-2" href="{% url 'login' %}">Log in</a></span>
+		</div>
+	</div>
+{% endblock content %}

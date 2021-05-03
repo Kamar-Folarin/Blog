@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+	
+  <div class="container pt-5">
+		<div class="my-2">{% include 'search_form.html' %}</div>
+      	<h1>Search Results for : {{request.GET.search}}</h1>
+  </div>
+	{% include 'posts.html' %}
+
+{% endblock content%}

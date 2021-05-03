@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="container mt-5"><h2>Posts of : Year - {{view.kwargs.year}}, Month - {{view.kwargs.month}}</h2></div>
+	{% include 'posts.html'%}
+
+{% endblock content%}

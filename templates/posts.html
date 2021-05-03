@@ -1,0 +1,48 @@
+<section class="blog" id="blog">
+	<div class="container">
+		{% if posts %}
+			{% for post in posts %}
+				<div class="post animation-element">
+					{% if post.image %}
+						<div class="post-row"><a href="{% url 'post-detail' post.slug %}"><img src="{{post.image.url}}"></a></div>
+					{% endif %}
+					<div class="post-row"><h3><a href="{% url 'post-detail' post.slug %}">{{post.title}}</a></h3>
+						<a href="{% url 'date-post' post.date_posted|date:'Y' post.date_posted|date:'n' %}">
+							<p class="post-extra" data-text="Posted on :"> <i class="fas fa-calendar-alt mr-2"></i>{{post.date_posted|date:"D jS M, Y"}}</p>
+						</a>
+						<a href="{% url 'author-post' post.author.username %}"><p class="post-extra" data-text="Posted by :">
+							<i class="fas fa-user-circle mr-2"></i> {{post.author}}</p>
+						</a>
+					</div>
+					<div class="post-row text-justify m-0">
+							{{post.content|safe|truncatewords:70|linebreaks}}
+					</div>
+					<a href="{% url 'post-detail' post.slug %}" class="btn continue-reading">
+						<i class="fab fa-readme mr-2"></i>Continue Reading
+					</a>
+				</div>
+			{% endfor %}
+			{% if is_paginated %}
+				<ul class="pagination justify-content-center">
+					{% if page_obj.has_previous %}
+						<li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+						<li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+					{% endif %}
+					{% for num in page_obj.paginator.page_range %}
+						{% if page_obj.number == num %}
+							<li class="page-item active"><span class="page-link">{{num}}</span></li>
+						{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+							<li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+						{% endif %}
+					{% endfor %}
+					{% if page_obj.has_next %}
+						<li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+						<li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last</a></li>
+					{% endif %}
+				</ul>
+			{% endif %}
+		{% else %}
+			<h3 class="text-center py-5 my-5">No Content Found</h3>
+		{% endif %}
+	</div>
+</section>

@@ -1,0 +1,10 @@
+<form method="get" action="{% url 'post-search' %}">
+	
+	<div class="input-group mb-3">
+	  	<input type="search" name="search" value="{{request.GET.search}}" placeholder="Search Here" class="form-control" required="">
+	  	<div class="input-group-append">
+		    <button class="btn btn-primary" type="submit"><i class="fas fa-search mr-2"></i>Search</button>
+	  	</div>
+	</div>
+	
+</form>

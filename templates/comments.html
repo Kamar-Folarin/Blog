@@ -1,0 +1,26 @@
+{% load mptt_tags %}
+{% recursetree comments %}
+    {% if not node.parent %}
+        <div class="root-comment">
+    {% endif %}
+        <blockquote class="blockquote comment animation-element pb-2">
+            <p class="m-0 d-inline-block">{{node.comment_body}}</p>
+            {% if user == node.user or user.is_staff %}
+               <a class="btn btn-danger btn-sm float-right" href="{% url 'comment-delete' post.slug node.pk %}"name="comment-delete" data-toggle="tooltip" data-placement="right" title="Delete Comment" type="submit"><i class="far fa-trash-alt"></i></a>
+            {% endif %}
+                <footer class="blockquote-footer pb-1">
+                  <small class="text-muted">
+                    {{node.user}}, {{node.date_posted|timesince}} ago 
+                  </small>
+                  <a href="javascript:void(0)" class="ml-2 reply">Reply</a>
+
+                </footer>
+                 <div parent-id="{{node.id}}"class="reply-container"></div>
+                    {% if not node.is_leaf_node %}
+                        {{ children }}
+                    {% endif %}
+        </blockquote>
+    {% if not node.parent %}
+        </div>
+    {% endif %}
+{% endrecursetree %}

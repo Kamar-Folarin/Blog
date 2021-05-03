@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid main-header">
+  <div id="aa_particles"></div>
+	<h1>Welcome to Blog<br>
+    <a href="#blog" class="btn btn-outline-light">Discover</a>
+  </h1>
+</div>
+    
+<div class="container mt-5">{% include 'search_form.html' %}</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        {% include 'posts.html'%}
+      </div>
+      <div class="col-lg-4 pt-5">
+        <aside class="pt-5 animation-element">
+        <h3 class="p-1">Most Commented Posts</h3>
+        <ul class="list-group ml-3">
+          {% for post in most_commented_posts %}
+            <li class="list-group-item"><a href="{% url 'post-detail' post.slug %}">{{post.title}}<span class="badge badge-primary badge-pill float-right">{{post.comments.count}}</span></a></li>
+          {% endfor %}
+        </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+{% endblock content%}

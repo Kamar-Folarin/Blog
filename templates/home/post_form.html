@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="container pt-5 my-5">
+		<form method="post" class="animation-element" enctype="multipart/form-data">
+			{% csrf_token %}
+			<h1>{{page_name}}</h1>
+			{% for error in form.non_field_errors %}
+				{{error}}
+			{% endfor %}
+			
+			<div class="form-group">
+		    	<label for="{{form.title.id_for_label}}">{{form.title.label}}</label>
+		    	{% if form.title.errors %}
+					{% render_field form.title class="form-control is-invalid" %}
+					<div class="invalid-feedback">
+						{% for error in form.title.errors %}
+							{{error}}
+						{% endfor %}
+					</div>
+				{% else %}
+					{% render_field form.title class="form-control" %}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+		    	<label for="{{form.slug.id_for_label}}">{{form.slug.label}}</label>
+		    	{% if form.slug.errors %}
+					{% render_field form.slug class="form-control is-invalid" %}
+					<div class="invalid-feedback">
+						{% for error in form.slug.errors %}
+							{{error}}
+						{% endfor %}
+					</div>
+				{% else %}
+					{% render_field form.slug class="form-control" %}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+		    	<label for="{{form.image.id_for_label}}">{{form.image.label}}</label>
+					{% if image %}
+						<br>
+						<div class="card update-image">
+							<img src="{{image}}" alt="{{image}}">
+			      			<div class="card-footer">
+				    	  		<small class="text-muted">Currently Selected</small>
+						    </div>
+						</div>
+				      	<div class="custom-control custom-switch">
+						    <input type="checkbox" class="custom-control-input" name="{{field.html_name}}-clear" id="{{field.html_name}}-clear_id">
+						    <label class="custom-control-label" for="{{field.html_name}}-clear_id">Remove Image</label>
+					  	</div>
+					{% endif %}					    
+		    	<div class="custom-file">
+				  	<input type="file" name="{{field.html_name}}"  id="{{field.id_for_label}}">
+				  	<label class="custom-file-label" for="{{field.id_for_label}}">Choose file</label>
+				</div>
+				{% for error in form.image.errors %}
+					<small class="text-danger">{{error}}</small>
+				{% endfor %}
+			</div>
+			
+			<div class="form-group">
+		    	<label for="{{form.content.id_for_label}}">{{form.content.label}}</label>
+				{% if form.content.errors %}
+					{% render_field form.content class="form-control is-invalid" %}
+					<div class="invalid-feedback">
+						{% for error in form.content.errors %}
+							{{error}}
+						{% endfor %}
+					</div>
+				{% else %}
+					{% render_field form.content class="form-control" %}
+				{% endif %}
+			</div>
+			
+			<button type="submit" class="btn btn-success"><i class="fas fa-save mr-2"></i>Save Post</button>
+			{% if page_name == "Update Post" %}
+		 		<a href="{% url 'post-detail' post.slug %}" class="btn btn-danger"><i class="fas fa-times-circle mr-2"></i>Cancel</a>
+		 	{% elif page_name == "Create Post" %}
+		 		<a href="{% url 'home' %}" class="btn btn-danger"><i class="fas fa-times-circle mr-2"></i>Cancel</a>
+	 		{% endif %}
+		</form>
+	</div>
+{% endblock content %}

@@ -1,0 +1,105 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lora|Merriweather:300,400" rel="stylesheet">
+    <title>Programming blog</title>
+  </head>
+  <body>
+    <nav class="navbar top-navbar navbar-light navbar-expand-md fixed-top">
+      
+      <a class="navbar-brand " href="{% url 'home' %}"><i class="fas fa-code mr-2"></i>Programming Blog</a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div  class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home mr-1"></i>Home</a>
+          </li>
+          {% if user.is_active %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user-circle mr-1"></i>Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'post-create' %}"><i class="fas fa-plus-square mr-1"></i>Create Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a>
+            </li>
+          {% else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}"><i class="fas fa-sign-in-alt mr-1"></i>Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register'%}"><i class="fas fa-user-plus mr-1"></i>Register</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    
+    {% if messages %}
+      <div class="messages">
+          {% for message in messages %}
+          {{ message|linebreaks }}
+        {% endfor %}
+      </div>
+    {% endif %}
+      
+    {% block content %}
+    
+    {% endblock content %}
+
+    
+    <div id="goToTop" class="go-to-top"><i class="fas fa-arrow-alt-circle-up"></i></div>
+  {% if user.is_active %}
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+              <div class="col-md-6">{% include 'search_form.html'%}</div>
+              <div class="col-md-6">
+                <nav class="navbar bottom-navbar navbar-light navbar-expand-md">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home mr-1"></i>Home</a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user-circle mr-1"></i>Profile</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'post-create' %}"><i class="fas fa-plus-square mr-1"></i>Create Post</a>
+                      </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="row my-3">
+              <div class="col-12 text-right">
+                <span class="text-muted">Logged in : </span>{{user.username}} <a class="ml-2" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a>
+              </div>
+            </div>
+        </div>
+      </footer>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    <script src="{% static 'script.js' %}"></script>
+    {% block javascript %}
+    {% endblock javascript %}
+  </body>
+</html>
