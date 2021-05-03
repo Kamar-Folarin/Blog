@@ -1,4 +1,4 @@
-A Programming Blog Website.
+A Blog Website implementing basic CRUD operations.
 
 Main Technologies:
 - Django
@@ -8,7 +8,7 @@ Main Technologies:
 - Javascript
 
 Overiew:
-- User can login or register with their Email address.
+- SuperUser can login or register with their Email address.
 - Users can reset their password by clicking on link sent to their email address.
 - Registered Users can add, view, update, delete posts.
 - Unregistered users can view posts only.
@@ -17,3 +17,6 @@ Overiew:
 - Registered Users can reply to comments as well.
 - Users can see posts by specify author by clicking on author name
 - Users can see posts of specific time period by clicking on date of post.
+
+link to hosted app on heroku
+https://aqueous-brook-18436.herokuapp.com/
